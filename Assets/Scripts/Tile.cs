@@ -30,9 +30,7 @@ public class Tile : MonoBehaviour
         // TODO: Do not allow backtrack if it is not the most recently traversed tile
         /*
         if (to.isTraversed){
-            if (to != this.prevTile){
-                Debug.Log(this.prevTile);
-                Debug.Log(to);
+            if ( to != this.prevTile ){
                 Debug.Log("Not most recently traversed tile!");
                 return false;
             }
