@@ -6,6 +6,8 @@ public class GridManager : MonoBehaviour
 {
     public int rows;
     public int columns;
+    public int movesLeft;
+
     [SerializeField] private GameObject tilePrefab;
 
     [SerializeField] int startTilex;
@@ -50,14 +52,21 @@ public class GridManager : MonoBehaviour
     }
 
     bool canDoMove(Move move)
-    {
+    {   
         Tile from = selectedTile;
+        Tile to = findToTile(from, move);
+
+        // Check if theres any moves remaining
+        if (movesLeft == 0 && !to.isTraversed){
+            return false;
+        }
+        
         if(!from.canMoveFrom(move))
         {
             return false;
         }
-        Tile to = findToTile(from, move);
-        if(!to.canMoveTo(from,move))
+        
+        if(!to.canMoveTo(from, to, move))
         {
             return false;
         }
@@ -69,7 +78,19 @@ public class GridManager : MonoBehaviour
     {
         Tile from = selectedTile;
         Tile to = findToTile(from, move);
-        from.deselectTile();
+        to.prevTile = from;
+
+        // Check if we are going forward or going backwards in our root
+        bool isEnteringNewTile = false;
+        if (!to.isTraversed){
+            // We are entering a new tile
+            isEnteringNewTile = true;
+            movesLeft--;
+        }
+        else {
+            movesLeft++;
+        }
+        from.deselectTile(isEnteringNewTile);
         to.selectTile();
         selectedTile = to;
     }
@@ -111,6 +132,9 @@ public class GridManager : MonoBehaviour
         
         selectedTile=tiles[startTilex,startTiley];
         selectedTile.selectTile();
+
+        // Initialize the number of moves left
+        movesLeft = 5;
     }
 
     // Start is called before the first frame update

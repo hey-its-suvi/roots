@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    private bool isSelected;
+    public bool isSelected;
+    public bool isTraversed;
     private SpriteRenderer selectedRenderer;
+    public Tile prevTile;
 
     public int x;
     public int y;
@@ -23,21 +25,38 @@ public class Tile : MonoBehaviour
         return true;
     }
 
-    public bool canMoveTo(Tile from, Move move)
+    public bool canMoveTo(Tile from, Tile to, Move move)
     {
+        // TODO: Do not allow backtrack if it is not the most recently traversed tile
+        /*
+        if (to.isTraversed){
+            if (to != this.prevTile){
+                Debug.Log(this.prevTile);
+                Debug.Log(to);
+                Debug.Log("Not most recently traversed tile!");
+                return false;
+            }
+        }*/
         return true;
     }
     public void selectTile()
     {
-        isSelected = true;
+        // isSelected = true;
         selectedRenderer.enabled = true;
+        selectedRenderer.color = new Color(.5f, .5f, .5f, .5f);
     }
 
-    public void deselectTile()
+    public void deselectTile(bool enteringNewTile)
     {
-        isSelected = false;
-        selectedRenderer.enabled = false;
-
+        // isSelected = false;
+        if (enteringNewTile){
+            selectedRenderer.color = Color.red;
+            isTraversed = true;
+        }
+        else {
+            selectedRenderer.enabled = false;
+            isTraversed = false;
+        }
     }
 
     public void init(int i, int j, int totalRows, int totalColumns, GameStateManager gameStateManager)
