@@ -6,6 +6,7 @@ public class GameStateManager : MonoBehaviour
 {
     public int movesLeft;
     public GridManager gridManager;
+    public SpriteLoader spriteLoader;
 
     // Start is called before the first frame update
     void Start()

@@ -17,7 +17,7 @@ public class GridManager : MonoBehaviour
     private Tile selectedTile;
 
     [SerializeField]private GameStateManager gameStateManager;
-
+    
 
     void HandleInput()
     {
@@ -71,6 +71,13 @@ public class GridManager : MonoBehaviour
     {
         Tile from = selectedTile;
         Tile to = findToTile(from, move);
+        from.doMoveFrom(to, move);
+        to.doMoveTo(from, move);
+        from.deselectTile(true);
+        to.selectTile();
+        selectedTile = to;
+        return;
+
         // If entering a new tile, update the prevTile
         // Dont want to change prevTile if we are backtracking
         if (!to.isTraversed){
@@ -92,14 +99,14 @@ public class GridManager : MonoBehaviour
         selectedTile = to;
 
         // Pickup Powerup
-        if (to.tileType == TileType.Powerup) {
-            gameStateManager.movesLeft += 5; // For now, all powerups are +5
-        }
+        // if (to.tileType == TileType.Powerup) {
+        //     gameStateManager.movesLeft += 5; // For now, all powerups are +5
+        // }
 
-        // Reach Exit
-        if (to.tileType == TileType.Finish){
-            // TODO: Give player win notification
-        }
+        // // Reach Exit
+        // if (to.tileType == TileType.Finish){
+        //     // TODO: Give player win notification
+        // }
     }
 
     private Tile findToTile(Tile from, Move move)
