@@ -28,6 +28,11 @@ public class Tile : MonoBehaviour
 
     public bool canMoveTo(Tile from, Tile to, Move move)
     {
+        // Dont allow to move to tile if no moves are left and we are not backtracking
+        if(gameStateManager.movesLeft == 0 && !to.isTraversed)
+        {    
+            return false;
+        }
         // Do not allow backtrack if it is not the most recently traversed tile
         if (to.isTraversed){
             if ( from.prevTile != to ){

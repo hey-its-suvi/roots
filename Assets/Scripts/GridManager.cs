@@ -6,8 +6,6 @@ public class GridManager : MonoBehaviour
 {
     public int rows;
     public int columns;
-    public int movesLeft;
-
     [SerializeField] private GameObject tilePrefab;
 
     [SerializeField] int startTilex;
@@ -54,17 +52,12 @@ public class GridManager : MonoBehaviour
     bool canDoMove(Move move)
     {   
         Tile from = selectedTile;
-        Tile to = findToTile(from, move);
-
-        // Check if theres any moves remaining
-        if (movesLeft == 0 && !to.isTraversed){
-            return false;
-        }
         
         if(!from.canMoveFrom(move))
         {
             return false;
         }
+        Tile to = findToTile(from, move);
         
         if(!to.canMoveTo(from, to, move))
         {
@@ -89,10 +82,10 @@ public class GridManager : MonoBehaviour
         if (!to.isTraversed){
             // We are entering a new tile
             isEnteringNewTile = true;
-            movesLeft--;
+            gameStateManager.movesLeft--;
         }
         else {
-            movesLeft++;
+            gameStateManager.movesLeft++;
         }
         from.deselectTile(isEnteringNewTile);
         to.selectTile();
@@ -100,7 +93,7 @@ public class GridManager : MonoBehaviour
 
         // Pickup Powerup
         if (to.tileType == TileType.Powerup) {
-            movesLeft += 5; // For now, all powerups are +5
+            gameStateManager.movesLeft += 5; // For now, all powerups are +5
         }
 
         // Reach Exit
@@ -147,8 +140,6 @@ public class GridManager : MonoBehaviour
         selectedTile=tiles[startTilex,startTiley];
         selectedTile.selectTile();
 
-        // Initialize the number of moves left
-        movesLeft = 4;
     }
 
     // Start is called before the first frame update

@@ -6,11 +6,11 @@ using TMPro;
 public class MoveDisplay : MonoBehaviour
 {
     public TMP_Text movesLeftText;
-    public GridManager gridManager;
+    public GameStateManager gameStateManager;
 
     // Update is called once per frame
     void Update()
     {
-        movesLeftText.text = gridManager.movesLeft.ToString();
+        movesLeftText.text = "Moves Left:" + gameStateManager.movesLeft.ToString();
     }
 }
