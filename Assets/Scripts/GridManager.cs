@@ -11,6 +11,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] int startTilex;
 
     [SerializeField] int startTiley;
+    public int winTilex;
+    public int winTiley;
 
 
     private Tile[,] tiles;
@@ -23,19 +25,19 @@ public class GridManager : MonoBehaviour
     {
         Move move = Move.None;
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) && GameStateManager.isPaused != true)
         {
             move = Move.Up; 
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) && GameStateManager.isPaused != true)
         {
             move = Move.Down; 
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) && GameStateManager.isPaused != true)
         {
             move = Move.Left;    
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(KeyCode.RightArrow) && GameStateManager.isPaused != true)
         {
             move = Move.Right; 
         }
@@ -47,6 +49,10 @@ public class GridManager : MonoBehaviour
             }
         }
 
+    }
+
+    public Tile getSelectedTile(){
+        return selectedTile;
     }
 
     bool canDoMove(Move move)

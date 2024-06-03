@@ -108,6 +108,9 @@ public class Tile : MonoBehaviour
         else if (x == 3 && y == 0){
             tileType = new PowerupTile(5);
         }
+        else if (x == 0 && y == 0){
+            tileType = new ExitTile();
+        }
         else
         {
             tileType = new EmptyTile();
