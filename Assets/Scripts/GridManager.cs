@@ -78,7 +78,11 @@ public class GridManager : MonoBehaviour
     {
         Tile from = selectedTile;
         Tile to = findToTile(from, move);
-        to.prevTile = from;
+        // If entering a new tile, update the prevTile
+        // Dont want to change prevTile if we are backtracking
+        if (!to.isTraversed){
+            to.prevTile = from;
+        }
 
         // Check if we are going forward or going backwards in our root
         bool isEnteringNewTile = false;
@@ -134,7 +138,7 @@ public class GridManager : MonoBehaviour
         selectedTile.selectTile();
 
         // Initialize the number of moves left
-        movesLeft = 5;
+        movesLeft = 100;
     }
 
     // Start is called before the first frame update

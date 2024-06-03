@@ -28,13 +28,14 @@ public class Tile : MonoBehaviour
     public bool canMoveTo(Tile from, Tile to, Move move)
     {
         // TODO: Do not allow backtrack if it is not the most recently traversed tile
-        /*
+        
         if (to.isTraversed){
-            if ( to != this.prevTile ){
+            if ( from.prevTile != to ){
+                Debug.Log("to:(" + to.x + "," + to.y + "). prev:(" + prevTile.x + "," + prevTile.y + ")");
                 Debug.Log("Not most recently traversed tile!");
                 return false;
             }
-        }*/
+        }
         return true;
     }
     public void selectTile()
