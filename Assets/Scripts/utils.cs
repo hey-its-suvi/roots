@@ -6,3 +6,11 @@ public enum Move
     Left,
     Right
 }
+
+public enum TileType
+{
+    Start,
+    Finish,
+    Rock,
+    Powerup
+}

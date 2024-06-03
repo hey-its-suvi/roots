@@ -97,6 +97,16 @@ public class GridManager : MonoBehaviour
         from.deselectTile(isEnteringNewTile);
         to.selectTile();
         selectedTile = to;
+
+        // Pickup Powerup
+        if (to.tileType == TileType.Powerup) {
+            movesLeft += 5; // For now, all powerups are +5
+        }
+
+        // Reach Exit
+        if (to.tileType == TileType.Finish){
+            // TODO: Give player win notification
+        }
     }
 
     private Tile findToTile(Tile from, Move move)
@@ -138,7 +148,7 @@ public class GridManager : MonoBehaviour
         selectedTile.selectTile();
 
         // Initialize the number of moves left
-        movesLeft = 100;
+        movesLeft = 4;
     }
 
     // Start is called before the first frame update

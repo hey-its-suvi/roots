@@ -8,6 +8,7 @@ public class Tile : MonoBehaviour
     public bool isTraversed;
     private SpriteRenderer selectedRenderer;
     public Tile prevTile;
+    public TileType tileType;
 
     public int x;
     public int y;
@@ -27,14 +28,18 @@ public class Tile : MonoBehaviour
 
     public bool canMoveTo(Tile from, Tile to, Move move)
     {
-        // TODO: Do not allow backtrack if it is not the most recently traversed tile
-        
+        // Do not allow backtrack if it is not the most recently traversed tile
         if (to.isTraversed){
             if ( from.prevTile != to ){
                 Debug.Log("to:(" + to.x + "," + to.y + "). prev:(" + prevTile.x + "," + prevTile.y + ")");
                 Debug.Log("Not most recently traversed tile!");
                 return false;
             }
+        }
+
+        // Cant move if rock
+        if (to.tileType == TileType.Rock){
+            return false;
         }
         return true;
     }
@@ -64,6 +69,26 @@ public class Tile : MonoBehaviour
         x=i;
         y=j;
         transform.position = new Vector3((float)(y-(totalColumns-1)/2f)/2*2f,(float)(x-(totalRows-1)/2f)/2*2f, 0);
+
+        // Just for now, statically initialize start, finish, rocks, and powerups
+        if (x == 5 && y == 1){
+            tileType = TileType.Start;
+        }
+        if (x == 0 && y == 3){
+            tileType = TileType.Finish;
+            selectedRenderer.enabled = true;
+            selectedRenderer.color = Color.green;
+        }
+        if ( (x == 1 && y == 3) || (x == 1 && y == 2) ||(x == 0 && y == 2) ){
+            tileType = TileType.Rock;
+            selectedRenderer.enabled = true;
+            selectedRenderer.color = Color.black;
+        }
+        if (x == 3 && y == 0){
+            tileType = TileType.Powerup;
+            selectedRenderer.enabled = true;
+            selectedRenderer.color = Color.blue;
+        }
     }
 
     void Awake()
