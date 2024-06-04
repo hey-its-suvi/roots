@@ -205,7 +205,7 @@ public class BreakableRockTile : TileType
 
     public override bool canMoveTo(Tile from, Tile to, Move move)
     {
-        if(move == Utils.oppositeMove(breakDirection)) return true;
+        if(move == Utils.oppositeMove(breakDirection) && gameStateManager.movesLeft > 0) return true;
         else return false;
     }
 
