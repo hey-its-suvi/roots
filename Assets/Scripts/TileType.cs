@@ -182,6 +182,56 @@ public class RockTile : TileType
 
 }
 
+public class BreakableRockTile : TileType
+{
+
+    GameStateManager gameStateManager;
+    Move breakDirection;
+
+    public BreakableRockTile(Move breakDirection)
+    {
+        this.breakDirection = breakDirection;
+    }
+    public override void init(GameStateManager gameStateManager)
+    {
+        this.gameStateManager = gameStateManager;
+    }
+
+    // Should never happen
+    public override bool canMoveFrom(Move move)
+    {
+        return false;
+    }
+
+    public override bool canMoveTo(Tile from, Tile to, Move move)
+    {
+        if(move == Utils.oppositeMove(breakDirection)) return true;
+        else return false;
+    }
+
+    // Should never happen
+    public override TileType doMoveFrom(Tile to, Move move)
+    {
+        return new RockTile();
+    }
+
+    // Should never happen
+
+    public override TileType doMoveTo(Tile From, Move move)
+    {
+        gameStateManager.movesLeft--;
+        PathTile newPath = new PathTile(Utils.oppositeMove(move), Move.None);
+        newPath.init(gameStateManager);
+        return newPath;
+    }
+
+    public override Sprite getSprite()
+    {
+        string spriteString = "breakableRockFrom"+Enum.GetName(typeof(Move), breakDirection);
+        return gameStateManager.spriteLoader.getSprite(spriteString);
+    }
+}
+
 public class PowerupTile : TileType
 {
 

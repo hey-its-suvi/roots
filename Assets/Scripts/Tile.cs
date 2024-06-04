@@ -111,6 +111,10 @@ public class Tile : MonoBehaviour
         else if (x == 0 && y == 0){
             tileType = new ExitTile();
         }
+        else if((x == 2 && y == 3))
+        {
+            tileType = new BreakableRockTile(Move.Right);
+        }
         else
         {
             tileType = new EmptyTile();
