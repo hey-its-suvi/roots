@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "roots.sln"
+    "dotnet.defaultSolution": "Roots.sln"
 }
