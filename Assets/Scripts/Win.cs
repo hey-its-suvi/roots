@@ -13,7 +13,7 @@ public class Win : MonoBehaviour
         Tile selectedTile = gridManager.getSelectedTile();
         // Trigger Win
         if (selectedTile.x == gridManager.winTilex && selectedTile.y == gridManager.winTiley) {
-            _winCanvas.GetComponent<Canvas>().enabled = true;
+            gameObject.SetActive(true);
             GameStateManager.isPaused = true;
         }
     }
@@ -21,7 +21,7 @@ public class Win : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _winCanvas.GetComponent<Canvas>().enabled = false;
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame

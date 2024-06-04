@@ -7,6 +7,8 @@ public class GameStateManager : MonoBehaviour
     public int movesLeft;
     public GridManager gridManager;
     public SpriteLoader spriteLoader;
+
+    public UIManager uiManager;
     public static bool isPaused;
 
     // Start is called before the first frame update

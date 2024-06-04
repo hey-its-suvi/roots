@@ -55,6 +55,12 @@ public class GridManager : MonoBehaviour
         return selectedTile;
     }
 
+    public bool hasWon()
+    {
+        if (selectedTile.x == winTilex && selectedTile.y == winTiley) return true;
+        else return false;
+    }
+
     bool canDoMove(Move move)
     {   
         Tile from = selectedTile;
@@ -83,36 +89,6 @@ public class GridManager : MonoBehaviour
         to.selectTile();
         selectedTile = to;
         return;
-
-        // If entering a new tile, update the prevTile
-        // Dont want to change prevTile if we are backtracking
-        if (!to.isTraversed){
-            to.prevTile = from;
-        }
-
-        // Check if we are going forward or going backwards in our root
-        bool isEnteringNewTile = false;
-        if (!to.isTraversed){
-            // We are entering a new tile
-            isEnteringNewTile = true;
-            gameStateManager.movesLeft--;
-        }
-        else {
-            gameStateManager.movesLeft++;
-        }
-        from.deselectTile(isEnteringNewTile);
-        to.selectTile();
-        selectedTile = to;
-
-        // Pickup Powerup
-        // if (to.tileType == TileType.Powerup) {
-        //     gameStateManager.movesLeft += 5; // For now, all powerups are +5
-        // }
-
-        // // Reach Exit
-        // if (to.tileType == TileType.Finish){
-        //     // TODO: Give player win notification
-        // }
     }
 
     private Tile findToTile(Tile from, Move move)
